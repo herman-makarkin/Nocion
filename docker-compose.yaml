@@ -11,14 +11,25 @@ services:
       args:
         user: LaNocion
         uid: 777
-    image: php-laravel-7.0
+    image: php-laravel-11
     restart: unless-stopped
     tty: true
     working_dir: /var/www
+    ports:
+      - 5173:5173
     networks:
         - app-network
     volumes:
       - ./:/var/www
+    develop:
+      watch:
+        - action: sync
+          path: ./
+          target: /var/www/
+        - action: rebuild
+          path: package.json
+          target: /var/www/
+
 
   db:
     container_name: pgsql
