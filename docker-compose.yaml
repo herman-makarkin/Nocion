@@ -8,14 +8,17 @@ services:
     build:
       context: ./infra/app
       dockerfile: Dockerfile
+      args:
+        user: LaNocion
+        uid: 777
     image: php-laravel-7.0
     restart: unless-stopped
     tty: true
     working_dir: /var/www
+    networks:
+        - app-network
     volumes:
       - ./:/var/www
-    networks:
-      - app-network
 
   db:
     container_name: pgsql
@@ -25,15 +28,15 @@ services:
     image: pgsql-docker
     restart: unless-stopped
     expose:
-      - "5432"
+      - 5432
     ports:
-      - "5433:5432"
+      - 5432:5432
     volumes:
       - ./infra/pgsql/script:/docker-entrypoint-initdb.d
       - ./infra/pgsql/data:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=${DB_USERNAME}
-      - POSTGRES_MULTIPLE_DATABASES=main_db,logger_db // you change this
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
     networks:
       - app-network
 
@@ -43,7 +46,7 @@ services:
     restart: unless-stopped
     tty: true
     ports:
-      - 8100:80
+      - 8000:80
     volumes:
       - ./:/var/www
       - ./infra/nginx/conf:/etc/nginx/conf.d
