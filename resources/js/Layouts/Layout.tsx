@@ -4,9 +4,9 @@ import React, { PropsWithChildren } from 'react'
 
 const Layout = ({ children }: PropsWithChildren) => {
     return (
-        <div className="h-full">
+        <div className=" h-full ">
             <Navbar />
-            <main className="h-full pt-20">
+            <main className="h-5/6 pt-40">
                 {children}
             </main>
             <Footer />
