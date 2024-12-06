@@ -51,9 +51,9 @@ services:
     networks:
       - app-network
 
-  nginx:
+  nocion-nginx:
     image: nginx:1.19.8-alpine
-    container_name: nginx
+    container_name: nocion-nginx
     restart: unless-stopped
     tty: true
     ports:
