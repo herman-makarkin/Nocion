@@ -1,9 +1,16 @@
-import { ChevronsLeft, MenuIcon, PlusIcon } from 'lucide-react'
+import { ChevronsLeft, MenuIcon, PlusIcon, Search, Settings } from 'lucide-react'
 import React, { ElementRef, useRef, useState } from 'react'
 import { useMediaQuery } from 'usehooks-ts';
 import { cn } from '@/lib/utils';
 import UserItem from './UserItem';
 import Item from './Item';
+import { useForm } from '@inertiajs/react';
+
+interface FormProps {
+    image: File | undefined;
+    title: string;
+    icon: File | undefined;
+}
 
 const Sidebar = () => {
     const isResizingRef = useRef(false);
@@ -13,6 +20,17 @@ const Sidebar = () => {
     const [isCollapsed, setIsCollapsed] = useState(false);
 
     const isMobile = useMediaQuery("(max-width: 768px)");
+
+    const { data, setData, post, errors } = useForm<FormProps>({
+        image: undefined,
+        title: 'New Note',
+        icon: undefined,
+    })
+
+    const onSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
+        e.preventDefault();
+        post(route('dashboard.store'));
+    }
 
     const onMouseDown = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         e.preventDefault();
@@ -84,7 +102,9 @@ const Sidebar = () => {
                     <UserItem></UserItem>
                 </div>
                 <div className="mt-4">
-                    <Item onClick={() => { }} icon={PlusIcon} label='New Note'></Item>
+                    <Item onClick={() => { }} icon={Search} label='Search' isSearch />
+                    <Item onClick={() => { }} icon={Settings} label='Settings' />
+                    <Item onClick={(e) => { onSubmit(e) }} icon={PlusIcon} label='New Note' />
                 </div>
                 <div onMouseDown={onMouseDown} onClick={resetWidth} className="opacity-0 group-hover/sidebar:opacity-100 transition cursor-ew-resize absolute h-full w-1 bg-primary/10 right-0 top-0"></div>
             </aside>

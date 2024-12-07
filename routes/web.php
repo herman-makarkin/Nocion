@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\NoteController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -14,9 +15,12 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('dashboard', [NoteController::class, 'edit'])->name('dashboard.edit');
+    Route::patch('dashboard', [NoteController::class, 'update'])->name('dashboard.update');
+    Route::post('dashboard', [NoteController::class, 'store'])->name('dashboard.store');
+    Route::delete('dashboard', [NoteController::class, 'destroy'])->name('dashboard.destroy');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
