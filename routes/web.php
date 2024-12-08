@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('dashboard/{noteId}', [NoteController::class, 'show'])->name('dashboard.show');
     Route::get('dashboard', [NoteController::class, 'edit'])->name('dashboard.edit');
     Route::patch('dashboard', [NoteController::class, 'update'])->name('dashboard.update');
     Route::post('dashboard', [NoteController::class, 'store'])->name('dashboard.store');

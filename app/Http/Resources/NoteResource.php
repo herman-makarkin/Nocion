@@ -21,7 +21,7 @@ class NoteResource extends JsonResource
             'cover_image' => $this->cover_image,
             'created_at' => (new Carbon($this->created_at))->format('Y-m-d'),
             'updated_at' => (new Carbon($this->updated_at))->format('Y-m-d'),
-            'created_by' => $this->created_by,
+            'created_by' => $this->createdBy,
             'is_archived' => $this->is_archived,
             'is_published' => $this->is_published,
         ];

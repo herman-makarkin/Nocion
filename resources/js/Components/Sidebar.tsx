@@ -1,10 +1,11 @@
-import { ChevronsLeft, MenuIcon, PlusIcon, Search, Settings } from 'lucide-react'
+import { ChevronsLeft, FileIcon, MenuIcon, PlusIcon, Search, Settings } from 'lucide-react'
 import React, { ElementRef, useRef, useState } from 'react'
 import { useMediaQuery } from 'usehooks-ts';
 import { cn } from '@/lib/utils';
 import UserItem from './UserItem';
 import Item from './Item';
 import { useForm } from '@inertiajs/react';
+import { data, Note } from '@/types';
 
 interface FormProps {
     image: File | undefined;
@@ -12,7 +13,7 @@ interface FormProps {
     icon: File | undefined;
 }
 
-const Sidebar = () => {
+const Sidebar = ({ notes }: { notes?: Note[] }) => {
     const isResizingRef = useRef(false);
     const sidebarRef = useRef<ElementRef<"aside">>(null);
     const navbarRef = useRef<ElementRef<"div">>(null);
@@ -20,6 +21,8 @@ const Sidebar = () => {
     const [isCollapsed, setIsCollapsed] = useState(false);
 
     const isMobile = useMediaQuery("(max-width: 768px)");
+
+    console.log(notes)
 
     const { data, setData, post, errors } = useForm<FormProps>({
         image: undefined,
@@ -88,6 +91,7 @@ const Sidebar = () => {
 
         }
     }
+    console.log(notes)
 
     return (
         <>
@@ -105,6 +109,11 @@ const Sidebar = () => {
                     <Item onClick={() => { }} icon={Search} label='Search' isSearch />
                     <Item onClick={() => { }} icon={Settings} label='Settings' />
                     <Item onClick={(e) => { onSubmit(e) }} icon={PlusIcon} label='New Note' />
+                </div>
+                <div className="mt-4">
+                    {notes && notes.map((note: Note) => (
+                        <Item key={note.id} onClick={() => { }} href={route('dashboard.show', note.id)} label={note.title} icon={FileIcon} />
+                    ))}
                 </div>
                 <div onMouseDown={onMouseDown} onClick={resetWidth} className="opacity-0 group-hover/sidebar:opacity-100 transition cursor-ew-resize absolute h-full w-1 bg-primary/10 right-0 top-0"></div>
             </aside>

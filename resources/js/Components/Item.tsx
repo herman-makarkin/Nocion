@@ -1,6 +1,8 @@
 import { ChevronDown, ChevronRight, Icon, LucideIcon } from 'lucide-react'
 import React from 'react'
 import { cn } from '@/lib/utils'
+import { Skeleton } from '@/components/ui/skeleton'
+import { Link } from '@inertiajs/react'
 
 
 type Item = {
@@ -9,10 +11,11 @@ type Item = {
     level?: number,
     isSearch?: boolean,
     icon: LucideIcon,
-    documentIcon?: string,
+    noteIcon?: string,
     active?: boolean,
     id?: number,
     expanded?: boolean
+    href?: string,
 }
 
 const Item = ({
@@ -20,25 +23,26 @@ const Item = ({
     id,
     onClick,
     icon: Icon,
-    documentIcon,
+    noteIcon,
     isSearch,
     level,
     active,
     expanded,
+    href = '',
 }: Item) => {
     const ChevronIcon = expanded ? ChevronDown : ChevronRight
 
     return (
-        <div onClick={onClick} style={{ paddingLeft: level ? `${level * 12 + 12}px` : '12px' }} role='button' className={cn("group min-h-[27px] text-sm py-1 pr-3 w-full hover:bg-primary/5 flex items-center text-muted-foreground font-medium", active && "bg-primary/5 text-primary")}>
+        <Link href={href} onClick={onClick} style={{ paddingLeft: level ? `${level * 12 + 12}px` : '12px' }} role='button' className={cn("group min-h-[27px] text-sm py-1 pr-3 w-full hover:bg-primary/5 flex items-center text-muted-foreground font-medium", active && "bg-primary/5 text-primary")}>
             {!!id && (
                 <div className="h-full rounded-sm hover:bg-neutral-300 dark:bg-neutral-600 mr-1" role='button' onClick={() => { }}>
                     <Icon className='shrink-0 h-[18px] mr-2 text-muted-foreground' />
                 </div>
             )}
 
-            {documentIcon ? (
+            {noteIcon ? (
                 <div className="shrink-0 mr-2 text-[18px]">
-                    {documentIcon}
+                    {noteIcon}
                 </div>
             ) : (
                 <Icon className='shrink-0 h-[18px] mr-2 text-muted-foreground' />
@@ -53,6 +57,15 @@ const Item = ({
                     </span> K
                 </kbd>
             )}
+        </Link>
+    )
+}
+
+Item.Skeleton = function ItemSkeleton({ level }: { level?: number }) {
+    return (
+        <div className="flex gap-x-2 py-[3px]" style={{ paddingLeft: level ? `${(level * 12) + 25}px` : '12px' }}>
+            <Skeleton className='h-4 w-4'></Skeleton>
+            <Skeleton className='h-4 w-[30%]'></Skeleton>
         </div>
     )
 }

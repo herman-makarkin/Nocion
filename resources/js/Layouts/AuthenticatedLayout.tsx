@@ -6,11 +6,13 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import Sidebar from '@/Components/Sidebar';
 import { Link, usePage } from '@inertiajs/react';
 import { PropsWithChildren, ReactNode, useState } from 'react';
+import { data } from '@/types';
 
 export default function Authenticated({
+    sidebar,
     header,
     children,
-}: PropsWithChildren<{ header?: ReactNode }>) {
+}: PropsWithChildren<{ header?: ReactNode }> & { sidebar: data }) {
     const user = usePage().props.auth.user;
 
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
@@ -18,7 +20,7 @@ export default function Authenticated({
 
     return (
         <div className="min-h-screen bg-background dark:bg-gray-900 flex relative">
-            <Sidebar />
+            <Sidebar notes={sidebar} />
             {/* <nav className="border-b border-gray-100 bg-white dark:border-gray-700 dark:bg-gray-800"> */}
             {/*     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"> */}
             {/*         <div className="flex h-16 justify-between"> */}

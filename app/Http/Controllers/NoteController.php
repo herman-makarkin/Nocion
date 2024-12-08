@@ -19,13 +19,24 @@ class NoteController extends Controller
     public function index()
     {
         $query = Note::query();
+        echo $query;
 
-        return inertia("dashboard", ['notes' => NoteResource::collection($query)]);
+        return inertia("Dashboard", ['notes' => NoteResource::collection($query)]);
     }
 
     public function edit()
     {
-        return inertia('Dashboard');
+        // $result = $noteId ? Note::find($noteId) : null;
+        // // $query = Note::query();
+        // // $notes = $query->orderBy('title', 'asc');
+        $response = ['notes' => Note::all()];
+        // echo 'hi';
+        // if ($result) {
+        //     $response['note'] = $result;
+        //     echo 'hi2';
+        // }
+
+        return inertia("Dashboard", $response);
     }
 
     /**
@@ -70,6 +81,15 @@ class NoteController extends Controller
         $data = $request->validated();
         $data['created_by'] = Auth::id();
         Note::create($data);
+    }
 
+    public function show(Note $noteId)
+    {
+        $allNotes = Note::all();
+        $note = $allNotes->find($noteId);
+        // $noteId = request('id', -1);
+        // $note = $noteId ? Note::find($noteId) : null;
+
+        return inertia("Dashboard", ['notes' => Note::all(), 'note' => new NoteResource($note)]);
     }
 }

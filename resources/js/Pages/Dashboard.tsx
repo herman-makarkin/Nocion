@@ -1,9 +1,12 @@
 import { Button } from '@/components/ui/button';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import { data, Note } from '@/types';
 import { Head } from '@inertiajs/react';
 import { PlusCircle } from 'lucide-react';
 
-export default function Dashboard() {
+export default function Dashboard({ notes, note }: {
+    notes: data, note: Note
+}) {
     return (
         <AuthenticatedLayout
             header={
@@ -11,6 +14,7 @@ export default function Dashboard() {
                     Dashboard
                 </h2>
             }
+            sidebar={notes}
         >
             <Head title="Dashboard" />
             <div className="h-full flex flex-col items-center justify-center space-y-4">
