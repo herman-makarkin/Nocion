@@ -7,6 +7,7 @@ import Sidebar from '@/Components/Sidebar';
 import { Link, usePage } from '@inertiajs/react';
 import { PropsWithChildren, ReactNode, useState } from 'react';
 import { data } from '@/types';
+import { SearchComponent } from '@/Components/SearchComponent';
 
 export default function Authenticated({
     sidebar,
@@ -174,6 +175,7 @@ export default function Authenticated({
             {/**/}
             <main className='w-full'>
                 {children}
+                <SearchComponent />
             </main>
 
             {/* {header && ( */}

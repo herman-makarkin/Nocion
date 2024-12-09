@@ -10,7 +10,7 @@ import { MoreHorizontal } from 'lucide-react'
 
 type Item = {
     label: string,
-    onClick: () => void,
+    onClick?: () => void,
     level?: number,
     isSearch?: boolean,
     icon: LucideIcon,
@@ -50,7 +50,6 @@ const Item = ({
     const handleExpand = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         e.preventDefault();
         e.stopPropagation();
-        console.log('asdjfajsdfj')
         onExpand?.();
     }
 
@@ -60,6 +59,12 @@ const Item = ({
         icon: undefined,
         parent_id: id,
     })
+
+    function click(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        onClick();
+    }
 
     const onCreate = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         if (!id) return;
@@ -76,7 +81,7 @@ const Item = ({
     };
 
     return (
-        <div key={id} onClick={onClick} style={{ paddingLeft: level ? `${level * 12 + 12}px` : '12px' }} role='button' className={cn("group min-h-[27px] text-sm py-1 pr-3 w-full hover:bg-primary/5 flex items-center text-muted-foreground font-medium", active && "bg-primary/5 text-primary")}>
+        <div key={id} onClick={click} style={{ paddingLeft: level ? `${level * 12 + 12}px` : '12px' }} role='button' className={cn("group min-h-[27px] text-sm py-1 pr-3 w-full hover:bg-primary/5 flex items-center text-muted-foreground font-medium", active && "bg-primary/5 text-primary")}>
             {(!!id && chevron) && (
                 <div onClick={handleExpand} className="h-full rounded-sm hover:bg-neutral-300 dark:bg-neutral-600 mr-1" role='button'>
                     <ChevronIcon className='shrink-0 h-[18px] mr-2 text-muted-foreground' />
