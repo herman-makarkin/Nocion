@@ -5,17 +5,14 @@ import { cn } from '@/lib/utils'
 import { FileIcon } from 'lucide-react'
 
 type DocumentList = {
-    parentNoteId?: number,
+    notes: Note[],
     level?: number,
-    data?: string,
-    notes?: Note[],
 }
-const NoteList = ({ parentNoteId,
-    level = 0, notes }: DocumentList) => {
+const NoteList = ({ level = 0, notes }: DocumentList) => {
 
     const [expanded, setExpanded] = useState<Record<string, boolean>>(({}))
 
-    const onExpand = (noteId: string) => {
+    const onExpand = (noteId: number) => {
         setExpanded(prevExpanded => ({
             ...prevExpanded,
             [noteId]: !prevExpanded[noteId]
@@ -44,21 +41,30 @@ const NoteList = ({ parentNoteId,
                 No pages inside
             </p>
             {notes.map(note => (
-                <Item
-                    onClick={() => { }}
-                    label={note.title}
-                    icon={FileIcon}
-                    active={params.noteId === note.id}
-                    level={level}
-                    onExpand={() => onExpand(note.id)}
-                    expanded={expanded[document.id]}
-                />
-                {
-                    expanded[note.id] && (
-                        <NoteList
-                            parentNoteId={note.id} level={level + 1} />
-                    )
-                }
+                <div key={note.id}>
+                    <Item
+                        onClick={() => { }}
+                        id={note.id}
+                        label={note.title}
+                        icon={FileIcon}
+                        // active={note.id === note.id}
+                        level={level}
+                        onExpand={() => onExpand(note.id)}
+                        expanded={expanded[note.id]}
+                        chevron={!!note.children.length}
+                    />
+                    {
+                        (!!note.children.length && expanded[note.id]) && (
+                            <NoteList notes={note.children} level={level + 1} />
+                        )
+                    }
+                </div>
+                // {
+                //     expanded[note.id] && (
+                //         <NoteList
+                //             parentNoteId={note.id} level={level + 1} />
+                //     )
+                // }
             ))}
         </>
     )

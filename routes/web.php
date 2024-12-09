@@ -20,7 +20,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', [NoteController::class, 'edit'])->name('dashboard.edit');
     Route::patch('dashboard', [NoteController::class, 'update'])->name('dashboard.update');
     Route::post('dashboard', [NoteController::class, 'store'])->name('dashboard.store');
-    Route::delete('dashboard', [NoteController::class, 'destroy'])->name('dashboard.destroy');
+    Route::delete('dashboard/{id}', [NoteController::class, 'destroy'])->name('dashboard.destroy');
 });
 
 Route::middleware('auth')->group(function () {

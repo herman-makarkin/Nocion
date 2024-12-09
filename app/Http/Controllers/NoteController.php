@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\Note;
+use Barryvdh\Debugbar;
 
 class NoteController extends Controller
 {
@@ -29,7 +30,10 @@ class NoteController extends Controller
         // $result = $noteId ? Note::find($noteId) : null;
         // // $query = Note::query();
         // // $notes = $query->orderBy('title', 'asc');
-        $response = ['notes' => Note::all()];
+        $response = ['notes' => Note::all()->where('created_by', '=', Auth::id())];
+        $response = ['notes' => Note::tree()->get()->toTree()];
+
+        // $allNotes = Note::allChildrenNotes();
         // echo 'hi';
         // if ($result) {
         //     $response['note'] = $result;
@@ -58,22 +62,12 @@ class NoteController extends Controller
     /**
      * Delete the user's account.
      */
-    public function destroy(Request $request): RedirectResponse
+    public function destroy($id)
     {
-        $request->validate([
-            'password' => ['required', 'current_password'],
-        ]);
-
-        $user = $request->user();
-
-        Auth::logout();
-
-        $user->delete();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return Redirect::to('/');
+        // $note = Note::find($id)->delete();
+        $note = Note::find($id);
+        $note->deleteAllChildrenNotes();
+        $note->delete();
     }
 
     public function store(NoteStoreRequest $request)

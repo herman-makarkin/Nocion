@@ -20,6 +20,8 @@ class NoteStoreRequest extends FormRequest
             'content' => ['nullabe', 'string'],
             'icon' => ['nullabe', 'string'],
             'cover_image' => ['nullabe', 'string'],
+            'created_by' => ['string'],
+            'parent_id' => ['nullable'],
         ];
     }
 }

@@ -5,6 +5,9 @@ export type Note = {
     content: string,
     converImage: string,
     icon: string,
+    children: Note[],
+    active: boolean,
+    expanded: boolean,
 }
 
 export type data = {
