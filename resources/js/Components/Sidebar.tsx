@@ -11,6 +11,7 @@ import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover
 import { usePage } from '@inertiajs/react';
 import TrashBox from './TrashBox';
 import { useSearch } from '@/Hooks/search';
+import { useSettings } from '@/Hooks/settings'
 
 interface FormProps {
     image: File | undefined;
@@ -20,6 +21,7 @@ interface FormProps {
 
 const Sidebar = () => {
     const search = useSearch();
+    const settings = useSettings();
     const notes: Note[] = usePage().props.notes;
     const isResizingRef = useRef(false);
     const sidebarRef = useRef<ElementRef<"aside">>(null);
@@ -112,7 +114,7 @@ const Sidebar = () => {
                 </div>
                 <div className="mt-4">
                     <Item onClick={search.onOpen} icon={Search} label='Search' isSearch />
-                    <Item onClick={() => { }} icon={Settings} label='Settings' />
+                    <Item onClick={settings.onOpen} icon={Settings} label='Settings' />
                     <Item onClick={e => onSubmit(e)} icon={PlusCircleIcon} label='New Note' />
                 </div>
                 <div className="mt-4">

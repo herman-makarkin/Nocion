@@ -88,26 +88,26 @@ const Item = ({
                 </div>
             )}
 
-            <Link href={href} className="flex items-center">
+            {/* <Link href={href} className="flex items-center"> */}
 
-                {noteIcon ? (
-                    <div className="shrink-0 mr-2 text-[18px]">
-                        {noteIcon}
-                    </div>
-                ) : (
-                    <Icon className='shrink-0 h-[18px] mr-2 text-muted-foreground' />
-                )}
+            {noteIcon ? (
+                <div className="shrink-0 mr-2 text-[18px]">
+                    {noteIcon}
+                </div>
+            ) : (
+                <Icon className='shrink-0 h-[18px] mr-2 text-muted-foreground' />
+            )}
 
 
-                <span className='truncate'>{label}</span>
-                {isSearch && (
-                    <kbd className='ml-auto pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100'>
-                        <span>
-                            CTRL
-                        </span> K
-                    </kbd>
-                )}
-            </Link>
+            <span className='truncate'>{label}</span>
+            {isSearch && (
+                <kbd className='ml-auto pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100'>
+                    <span>
+                        CTRL
+                    </span> K
+                </kbd>
+            )}
+            {/* </Link> */}
             {!!id && (
                 <div className='ml-auto flex items-center gap-x-2'>
                     <DropdownMenu>

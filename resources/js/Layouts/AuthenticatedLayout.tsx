@@ -8,6 +8,7 @@ import { Link, usePage } from '@inertiajs/react';
 import { PropsWithChildren, ReactNode, useState } from 'react';
 import { data } from '@/types';
 import { SearchComponent } from '@/Components/SearchComponent';
+import { SettingsComponent } from '@/Components/Settings';
 
 export default function Authenticated({
     sidebar,
@@ -176,6 +177,7 @@ export default function Authenticated({
             <main className='w-full'>
                 {children}
                 <SearchComponent />
+                <SettingsComponent />
             </main>
 
             {/* {header && ( */}
@@ -187,6 +189,6 @@ export default function Authenticated({
             {/* )} */}
             {/**/}
             {/* <main>{children}</main> */}
-        </div>
+        </div >
     );
 }
