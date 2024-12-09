@@ -2,8 +2,10 @@ import { Plus, Trash2, ChevronDown, ChevronRight, Icon, LucideIcon } from 'lucid
 import React from 'react'
 import { cn } from '@/lib/utils'
 import { Skeleton } from '@/components/ui/skeleton'
-import { Link, router } from '@inertiajs/react'
+import { Link, router, usePage } from '@inertiajs/react'
 import { useForm } from '@inertiajs/react';
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuContent } from '@/components/ui/dropdown-menu'
+import { MoreHorizontal } from 'lucide-react'
 
 
 type Item = {
@@ -14,7 +16,7 @@ type Item = {
     icon: LucideIcon,
     noteIcon?: string,
     active?: boolean,
-    id: number,
+    id?: number,
     expanded?: boolean
     href?: string,
     onExpand?: () => void,
@@ -30,8 +32,8 @@ interface FormProps {
 
 const Item = ({
     label,
-    id,
-    onClick,
+    id = 0,
+    onClick = () => { },
     icon: Icon,
     noteIcon,
     isSearch,
@@ -47,7 +49,7 @@ const Item = ({
 
     const handleExpand = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         e.preventDefault();
-        // e.stopPropagation();
+        e.stopPropagation();
         console.log('asdjfajsdfj')
         onExpand?.();
     }
@@ -103,12 +105,28 @@ const Item = ({
             </Link>
             {!!id && (
                 <div className='ml-auto flex items-center gap-x-2'>
+                    <DropdownMenu>
+                        <DropdownMenuTrigger onClick={e => e.stopPropagation()} asChild>
+                            <div className="opacity-0 group-hover:opacity-100 h-full ml-auto rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600" role='button'>
+                                <MoreHorizontal />
+                            </div>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                            <DropdownMenuItem onClick={removeNote}>
+                                <Trash2 className='h-4 w-4' />
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <div>
+                                Last edited by {usePage().props.auth.user.name}
+                            </div>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
                     <div onClick={onCreate} className="opacity-0 group-hover:opacity-100 h-full ml-auto rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600">
                         <Plus className='h-4 w-4 text-muted-foreground' />
                     </div>
-                    <div onClick={removeNote} className="opacity-0 group-hover:opacity-100 h-full ml-auto rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600">
-                        <Trash2 className='h-4 w-4 text-muted-foreground' />
-                    </div>
+                    {/* <div onClick={removeNote} className="opacity-0 group-hover:opacity-100 h-full ml-auto rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600"> */}
+                    {/*     <Trash2 className='h-4 w-4 text-muted-foreground' /> */}
+                    {/* </div> */}
                 </div>
             )}
         </div>

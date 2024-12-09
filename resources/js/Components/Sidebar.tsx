@@ -1,4 +1,4 @@
-import { ChevronsLeft, FileIcon, MenuIcon, PlusIcon, Search, Settings } from 'lucide-react'
+import { ChevronsLeft, FileIcon, MenuIcon, PlusCircleIcon, PlusIcon, Search, Settings, Trash2 } from 'lucide-react'
 import React, { ElementRef, useRef, useState } from 'react'
 import { useMediaQuery } from 'usehooks-ts';
 import { cn } from '@/lib/utils';
@@ -7,6 +7,9 @@ import Item from './Item';
 import { useForm } from '@inertiajs/react';
 import { data, Note } from '@/types';
 import NoteList from '@/Components/NoteList'
+import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
+import { usePage } from '@inertiajs/react';
+import TrashBox from './TrashBox';
 
 interface FormProps {
     image: File | undefined;
@@ -14,7 +17,8 @@ interface FormProps {
     icon: File | undefined;
 }
 
-const Sidebar = ({ notes }: { notes: Note[] }) => {
+const Sidebar = () => {
+    const notes: Note[] = usePage().props.notes;
     const isResizingRef = useRef(false);
     const sidebarRef = useRef<ElementRef<"aside">>(null);
     const navbarRef = useRef<ElementRef<"div">>(null);
@@ -26,7 +30,7 @@ const Sidebar = ({ notes }: { notes: Note[] }) => {
 
     const { data, setData, post, errors } = useForm<FormProps>({
         image: undefined,
-        title: 'New Note',
+        title: 'Untitled',
         icon: undefined,
     })
 
@@ -107,13 +111,23 @@ const Sidebar = ({ notes }: { notes: Note[] }) => {
                 <div className="mt-4">
                     <Item onClick={() => { }} icon={Search} label='Search' isSearch />
                     <Item onClick={() => { }} icon={Settings} label='Settings' />
-                    <Item onClick={(e) => { onSubmit(e) }} icon={PlusIcon} label='New Note' />
+                    <Item onClick={e => onSubmit(e)} icon={PlusCircleIcon} label='New Note' />
                 </div>
                 <div className="mt-4">
                     <NoteList notes={notes} />
-                    {/* {notes && notes.map((note: Note) => ( */}
-                    {/*     <Item key={note.id} onClick={() => { }} href={route('dashboard.show', note.id)} label={note.title} icon={FileIcon} /> */}
-                    {/* ))} */}
+                    <Item onClick={e => onSubmit(e)} icon={PlusIcon} label='New Note' />
+                    <Popover>
+                        <PopoverTrigger className='w-full mt-4'>
+                            <div style={{ paddingLeft: '12px' }} role='button' className={cn("group min-h-[27px] text-sm py-1 pr-3 w-full hover:bg-primary/5 flex items-center text-muted-foreground font-medium", false && "bg-primary/5 text-primary")}>
+                                <Trash2 className='shrink-0 h-[18px] mr-2 text-muted-foreground' />
+                                <span className='truncate'>Trash</span>
+                            </div>
+                        </PopoverTrigger>
+                        <PopoverContent className='p-0 w-72'
+                            side={isMobile ? 'bottom' : 'right'}>
+                            <TrashBox />
+                        </PopoverContent>
+                    </Popover>
                 </div>
                 <div onMouseDown={onMouseDown} onClick={resetWidth} className="opacity-0 group-hover/sidebar:opacity-100 transition cursor-ew-resize absolute h-full w-1 bg-primary/10 right-0 top-0"></div>
             </aside>

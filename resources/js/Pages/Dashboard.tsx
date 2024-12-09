@@ -4,7 +4,7 @@ import { data, Note } from '@/types';
 import { Head } from '@inertiajs/react';
 import { PlusCircle } from 'lucide-react';
 
-export default function Dashboard({ notes, note }: {
+export default function Dashboard({ note }: {
     notes: data, note: Note
 }) {
     return (
@@ -14,7 +14,6 @@ export default function Dashboard({ notes, note }: {
                     Dashboard
                 </h2>
             }
-            sidebar={notes}
         >
             <Head title="Dashboard" />
             <div className="h-full flex flex-col items-center justify-center space-y-4">
