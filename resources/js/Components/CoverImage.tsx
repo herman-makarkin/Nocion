@@ -1,21 +1,21 @@
 import { Dialog, DialogContent, DialogHeader } from '@/components/ui/dialog';
-import { useSettings } from '@/Hooks/settings';
+import { useCoverImage } from '@/Hooks/useCoverImage';
 import { Label } from '@/components/ui/label';
 import { useTheme } from '@/Hooks/theme';
 import { Button } from '@/components/ui/button';
 
-export const SettingsComponent = () => {
-    const settings = useSettings();
-    const isOpen = useSettings(store => store.isOpen);
-    const onClose = useSettings(store => store.onClose);
+export const CoverImage = () => {
+    const coverImage = useCoverImage();
+    const isOpen = useCoverImage(store => store.isOpen);
+    const onClose = useCoverImage(store => store.onClose);
     const theme = useTheme();
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
             <DialogContent>
                 <DialogHeader className='border-b pb-3'>
-                    <h2 className='text-lg font-medium'>
-                        My Settings
+                    <h2 className='text-center text-lg font-semibold'>
+                        Cover Image
                     </h2>
                 </DialogHeader>
                 <div className="flex items-center justify-between">
@@ -33,5 +33,6 @@ export const SettingsComponent = () => {
         </Dialog>
     )
 }
+
 
 

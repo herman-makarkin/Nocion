@@ -4,12 +4,15 @@ import Item from './Item'
 import { cn } from '@/lib/utils'
 import { FileIcon } from 'lucide-react'
 import { router } from '@inertiajs/react'
+import { useNote } from '@/Hooks/note'
 
 type DocumentList = {
     notes: Note[],
     level?: number,
 }
 const NoteList = ({ level = 0, notes }: DocumentList) => {
+
+    const currentNote = useNote().note;
 
     const [expanded, setExpanded] = useState<Record<string, boolean>>(({}))
 
@@ -42,6 +45,7 @@ const NoteList = ({ level = 0, notes }: DocumentList) => {
     }
 
 
+
     return (
         <>
             <p style={{ paddingLeft: level ? `${(level * 12) + 25}px` : undefined }} className={cn('hidden text-sm font-medium text-muted-foreground/80', expanded && 'last:block', level === 0 && 'hidden')}>
@@ -54,7 +58,8 @@ const NoteList = ({ level = 0, notes }: DocumentList) => {
                         id={note.id}
                         label={note.title}
                         icon={FileIcon}
-                        // active={note.id === note.id}
+                        noteIcon={note.icon}
+                        active={note.id === currentNote.id}
                         level={level}
                         onExpand={() => onExpand(note.id)}
                         expanded={expanded[note.id]}

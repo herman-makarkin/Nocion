@@ -3,11 +3,13 @@ import { Input } from "@/components/ui/input";
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { FormEventHandler } from "react";
+import { useNote } from "@/Hooks/note";
 
 const Title = () => {
     const inputRef = useRef<HTMLInputElement>(null);
 
-    const note = usePage().props.note.data;
+    const note = useNote().note;
+    const setNote = useNote().setNote;
 
     const [isEditing, setIsEditing] = useState(false);
 
@@ -44,6 +46,7 @@ const Title = () => {
         e.preventDefault();
         setData('title', e.target.value);
         note.title = e.target.value;
+        setNote(note);
         // console.log(e.target.value, 'value!!!');
         // onSubmit(e);
     }

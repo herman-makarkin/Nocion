@@ -6,6 +6,7 @@ import { Link, router, usePage } from '@inertiajs/react'
 import { useForm } from '@inertiajs/react';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuContent } from '@/components/ui/dropdown-menu'
 import { MoreHorizontal } from 'lucide-react'
+import { useNote } from '@/Hooks/note'
 
 
 type Item = {
@@ -45,6 +46,7 @@ const Item = ({
     onExpand = () => { },
 }: Item) => {
     const ChevronIcon = expanded ? ChevronDown : ChevronRight
+    const note = useNote().note;
 
     const handleExpand = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         e.preventDefault();
@@ -95,14 +97,14 @@ const Item = ({
 
             {noteIcon ? (
                 <div className="shrink-0 mr-2 text-[18px]">
-                    {noteIcon}
+                    {active ? note.icon : noteIcon}
                 </div>
             ) : (
                 <Icon className='shrink-0 h-[18px] mr-2 text-muted-foreground' />
             )}
 
 
-            <span className='truncate'>{label}</span>
+            <span className='truncate'>{active ? note.title : label}</span>
             {isSearch && (
                 <kbd className='ml-auto pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100'>
                     <span>
