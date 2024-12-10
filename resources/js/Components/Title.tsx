@@ -28,7 +28,6 @@ const Title = () => {
     });
 
     const onSubmit: FormEventHandler = (e) => {
-        console.log(data, 'CHECK!!!');
         post(route('dashboard.update', note.id));
     };
 

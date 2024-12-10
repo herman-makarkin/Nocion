@@ -17,9 +17,10 @@ class NoteStoreRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string'],
-            'content' => ['nullabe', 'string'],
-            'icon' => ['nullabe', 'string'],
-            'cover_image' => ['nullabe', 'string'],
+            'image' => ['nullable', 'image', 'max:2048'],
+            'content' => ['nullable'],
+            'icon' => ['nullable', 'string'],
+            'cover_image' => ['nullable', 'string'],
             'created_by' => ['string'],
             'parent_id' => ['nullable'],
         ];

@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\Note;
+use Illuminate\Support\Str;
 
 class NoteController extends Controller
 {
@@ -38,6 +39,15 @@ class NoteController extends Controller
     public function update(Request $request, $id)
     {
         $note = Note::find($id);
+        $image = $request['image'] ?? null;
+        $image = $request['image'] ?? null;
+
+        if ($image) {
+            $request['cover_image'] = $image->store('note/' . Str::random(), 'public');
+        } else {
+            $request['cover_image'] = null;
+        }
+
         $note->update($request->all());
     }
 

@@ -12,7 +12,7 @@ type DocumentList = {
 }
 const NoteList = ({ level = 0, notes }: DocumentList) => {
 
-    const currentNote = useNote().note;
+    let currentNote = useNote().note !== null ? useNote().note : { id: -1 };
 
     const [expanded, setExpanded] = useState<Record<string, boolean>>(({}))
 

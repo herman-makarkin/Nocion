@@ -13,7 +13,7 @@ return new class () extends Migration {
         Schema::create('notes', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('content')->nullable();
+            $table->jsonb('content')->nullable();
             $table->string('cover_image')->nullable();
             $table->string('icon')->nullable();
             $table->boolean('is_archived')->nullable();

@@ -3,7 +3,7 @@ export type Note = {
     title: string,
     created_by: number,
     content: string,
-    converImage: string,
+    cover_image: string,
     icon: string,
     children: Note[],
     active: boolean,
