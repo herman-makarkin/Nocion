@@ -19,7 +19,7 @@ export const SearchComponent = () => {
     const isOpen = useSearch(store => store.isOpen);
     const onClose = useSearch(store => store.onClose);
     const onSelect = (id: string) => {
-        router.get(route('dashboard.edit', id));
+        router.get(route('dashboard.show', id));
         onClose();
     }
 

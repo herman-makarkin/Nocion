@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { data, Note } from '@/types';
-import { Head } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 import { PlusCircle } from 'lucide-react';
 
 export default function Dashboard({ note }: {

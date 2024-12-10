@@ -12,6 +12,7 @@ import { usePage } from '@inertiajs/react';
 import TrashBox from './TrashBox';
 import { useSearch } from '@/Hooks/search';
 import { useSettings } from '@/Hooks/settings'
+import NavComponent from './NavComponent';
 
 interface FormProps {
     image: File | undefined;
@@ -29,6 +30,7 @@ const Sidebar = () => {
     const [isResetting, setIsResetting] = useState(false);
     const [isCollapsed, setIsCollapsed] = useState(false);
 
+
     const isMobile = useMediaQuery("(max-width: 768px)");
 
 
@@ -38,8 +40,7 @@ const Sidebar = () => {
         icon: undefined,
     })
 
-    const onSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
-        e.preventDefault();
+    const onSubmit = () => {
         post(route('dashboard.store'));
     }
 
@@ -115,11 +116,11 @@ const Sidebar = () => {
                 <div className="mt-4">
                     <Item onClick={search.onOpen} icon={Search} label='Search' isSearch />
                     <Item onClick={settings.onOpen} icon={Settings} label='Settings' />
-                    <Item onClick={e => onSubmit(e)} icon={PlusCircleIcon} label='New Note' />
+                    <Item onClick={e => onSubmit()} icon={PlusCircleIcon} label='New Note' />
                 </div>
                 <div className="mt-4">
                     <NoteList notes={notes} />
-                    <Item onClick={e => onSubmit(e)} icon={PlusIcon} label='New Note' />
+                    <Item onClick={e => onSubmit()} icon={PlusIcon} label='New Note' />
                     <Popover>
                         <PopoverTrigger className='w-full mt-4'>
                             <div style={{ paddingLeft: '12px' }} role='button' className={cn("group min-h-[27px] text-sm py-1 pr-3 w-full hover:bg-primary/5 flex items-center text-muted-foreground font-medium", false && "bg-primary/5 text-primary")}>
@@ -139,9 +140,14 @@ const Sidebar = () => {
                 ref={navbarRef}
                 className={cn('absolute top-0 z-[99999] left-60 w-[calc(100%-240px)]', isResetting && 'transition-all ease-in-out duration-300', isMobile && 'left-0 w-full')}>
 
-                <nav className='bg-transparent px-3 py-2 w-full'>
-                    {isCollapsed && <MenuIcon role='button' onClick={resetWidth} className='h-6 w-6 text-muted-foreground'></MenuIcon>}
-                </nav>
+                {!!usePage().props.note ? (
+                    <NavComponent isCollapsed={isCollapsed} onResetWidth={resetWidth} />
+                ) : (
+                    <nav className='bg-transparent px-3 py-2 w-full'>
+                        {isCollapsed && <MenuIcon role='button' onClick={resetWidth} className='h-6 w-6 text-muted-foreground'></MenuIcon>}
+                    </nav>
+                )}
+
             </div>
         </>
     )

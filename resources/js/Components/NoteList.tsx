@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import Item from './Item'
 import { cn } from '@/lib/utils'
 import { FileIcon } from 'lucide-react'
+import { router } from '@inertiajs/react'
 
 type DocumentList = {
     notes: Note[],
@@ -17,6 +18,12 @@ const NoteList = ({ level = 0, notes }: DocumentList) => {
             ...prevExpanded,
             [noteId]: !prevExpanded[noteId]
         }))
+    }
+
+    const openNote = (e, id: number) => {
+        // e.preventDefault();
+        // e.stopPropagation();
+        router.get(route('dashboard.show', id))
     }
 
     if (notes === undefined) {
@@ -43,7 +50,7 @@ const NoteList = ({ level = 0, notes }: DocumentList) => {
             {notes.map(note => (
                 <div key={note.id}>
                     <Item
-                        onClick={() => { }}
+                        onClick={(e) => { openNote(e, note.id) }}
                         id={note.id}
                         label={note.title}
                         icon={FileIcon}

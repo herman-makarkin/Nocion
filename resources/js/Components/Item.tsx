@@ -45,7 +45,6 @@ const Item = ({
     onExpand = () => { },
 }: Item) => {
     const ChevronIcon = expanded ? ChevronDown : ChevronRight
-    console.log(expanded);
 
     const handleExpand = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         e.preventDefault();
@@ -67,15 +66,19 @@ const Item = ({
     }
 
     const onCreate = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        e.preventDefault();
+        e.stopPropagation();
         if (!id) return;
 
-        e.preventDefault();
         post(route('dashboard.store'));
     }
 
-    const removeNote = () => {
+    const removeNote = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        e.preventDefault();
+        e.stopPropagation();
         if (window.confirm('Are you sure you want to remove this note?')) {
             const message = router.delete(route('dashboard.destroy', id));
+            console.log('deleteasdfasdf!!!')
         }
         return;
     };
@@ -117,7 +120,7 @@ const Item = ({
                             </div>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent>
-                            <DropdownMenuItem onClick={removeNote}>
+                            <DropdownMenuItem onClick={(e) => removeNote(e)}>
                                 <Trash2 className='h-4 w-4' />
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
