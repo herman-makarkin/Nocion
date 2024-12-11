@@ -6,7 +6,6 @@ use App\Http\Requests\NoteStoreRequest;
 use App\Http\Resources\NoteResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use App\Models\Note;
 use Illuminate\Support\Str;
 
