@@ -26,7 +26,7 @@ class NoteUpdateRequest extends FormRequest
             'content' => ['nullable', 'string'],
             'icon' => ['nullable', 'string'],
             'cover_image' => ['nullable', 'string'],
-            'created_by' => ['string'],
+            'created_by' => ['nullable', 'string'],
             'parent_id' => ['nullable'],
         ];
     }

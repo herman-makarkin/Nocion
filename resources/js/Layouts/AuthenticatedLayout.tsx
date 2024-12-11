@@ -26,7 +26,7 @@ export default function Authenticated({
         useState(false);
 
     return (
-        <div className={cn("min-h-screen bg-background dark:bg-gray-900 flex relative", theme.isDark && 'dark')}>
+        <div className={"min-h-screen bg-background dark:bg-gray-900 flex relative"}>
             <Sidebar />
             <main className='w-full'>
                 {children}

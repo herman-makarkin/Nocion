@@ -24,6 +24,7 @@ export const SearchComponent = () => {
     }
 
     const notes = usePage().props.notes;
+    if (notes === null || notes === undefined) return;
 
     useEffect(() => {
         const down = (e: KeyboardEvent) => {
@@ -44,7 +45,7 @@ export const SearchComponent = () => {
                 <CommandEmpty>No results found</CommandEmpty>
                 <CommandGroup heading='Notes'>
                     {notes.map((note: Note) => (
-                        <CommandItem key={note.id} value={`${note.id}-${note.title}`} title={note.title} onSelect={onSelect}>
+                        <CommandItem key={note.id} value={`${note.id}-${note.title}`} title={note.title} onSelect={() => onSelect(note.id)}>
                             {note.icon ? (
                                 <p className='mr-w text-[18px]'>
                                     {note.icon}

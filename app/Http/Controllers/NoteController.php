@@ -3,16 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\NoteStoreRequest;
-use App\Http\Requests\NoteUpdateRequest;
-use App\Http\Requests\ProfileUpdateRequest;
 use App\Http\Resources\NoteResource;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
-use Inertia\Inertia;
-use Inertia\Response;
+use Illuminate\Support\Facades\DB;
 use App\Models\Note;
 use Illuminate\Support\Str;
 
@@ -56,7 +50,6 @@ class NoteController extends Controller
      */
     public function destroy($id)
     {
-        // $note = Note::find($id)->delete();
         $note = Note::find($id);
         $note->deleteAllChildrenNotes();
         $note->delete();

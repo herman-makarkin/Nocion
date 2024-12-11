@@ -23,7 +23,7 @@ const Cover = () => {
     }
     console.log(!note.cover_image);
     return (
-        <div className={cn("relative w-full group", !note?.cover_image ? 'h-[12vh]' : ' h-[35vh]')}>
+        <div className={cn("relative w-full group overflow-hidden", !note?.cover_image ? 'h-[12vh]' : ' h-[35vh]')}>
             {!!note?.cover_image && (
                 <>
                     <img src={note.cover_image} alt="" />

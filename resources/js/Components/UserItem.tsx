@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Link, usePage } from '@inertiajs/react';
 import { DropdownMenuTrigger, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
 import { AvatarImage, Avatar } from '@/components/ui/avatar';
-import { ChevronsLeftRight } from 'lucide-react';
+import { ChevronsLeftRight, UserRound } from 'lucide-react';
 
 const UserItem = () => {
     const user = usePage().props.auth.user;
@@ -15,9 +15,14 @@ const UserItem = () => {
                 <div className="flex items-center text-sm p-3 w-full hover:bg-primary/5" role='button'>
 
                     <div className="gap-x-2 flex items-center max-w-[150px]">
-                        <Avatar className='h-10 w-10'>
-                            <AvatarImage src={user.name}></AvatarImage>
-                        </Avatar>
+                        {user.avatar ? (
+                            <Avatar className='h-10 w-10'>
+
+                                <AvatarImage src={user.name}></AvatarImage>
+                            </Avatar>
+                        ) : (
+                            <UserRound className='h-5 w-5' />
+                        )}
                         <span>
                             {user?.name}
                         </span>

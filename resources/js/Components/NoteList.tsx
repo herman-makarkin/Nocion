@@ -24,8 +24,6 @@ const NoteList = ({ level = 0, notes }: DocumentList) => {
     }
 
     const openNote = (e, id: number) => {
-        // e.preventDefault();
-        // e.stopPropagation();
         router.get(route('dashboard.show', id))
     }
 

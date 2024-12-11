@@ -15,15 +15,14 @@ import { useSettings } from '@/Hooks/settings'
 import NavComponent from './NavComponent';
 
 interface FormProps {
-    image: File | undefined;
     title: string;
-    icon: File | undefined;
 }
 
 const Sidebar = () => {
     const search = useSearch();
     const settings = useSettings();
     const notes: Note[] = usePage().props.notes;
+    if (notes === null || notes === undefined) return;
     const isResizingRef = useRef(false);
     const sidebarRef = useRef<ElementRef<"aside">>(null);
     const navbarRef = useRef<ElementRef<"div">>(null);
@@ -35,9 +34,7 @@ const Sidebar = () => {
 
 
     const { data, setData, post, errors } = useForm<FormProps>({
-        image: undefined,
         title: 'Untitled',
-        icon: undefined,
     })
 
     const onSubmit = () => {
@@ -79,7 +76,7 @@ const Sidebar = () => {
             setIsCollapsed(false);
             setIsResetting(true);
 
-            sidebarRef.current.style.width = isMobile ? "100%" : "240px";
+            sidebarRef.current.style.width = isMobile ? "100%" : "250px";
             navbarRef.current.style.setProperty('width', isMobile ? "0" : "calc(100% - 250px)")
 
             navbarRef.current.style.setProperty("left", isMobile ? "100%" : "250px");
@@ -121,27 +118,27 @@ const Sidebar = () => {
                 <div className="mt-4">
                     <NoteList notes={notes} />
                     <Item onClick={e => onSubmit()} icon={PlusIcon} label='New Note' />
-                    <Popover>
-                        <PopoverTrigger className='w-full mt-4'>
-                            <div style={{ paddingLeft: '12px' }} role='button' className={cn("group min-h-[27px] text-sm py-1 pr-3 w-full hover:bg-primary/5 flex items-center text-muted-foreground font-medium", false && "bg-primary/5 text-primary")}>
-                                <Trash2 className='shrink-0 h-[18px] mr-2 text-muted-foreground' />
-                                <span className='truncate'>Trash</span>
-                            </div>
-                        </PopoverTrigger>
-                        <PopoverContent className='p-0 w-72'
-                            side={isMobile ? 'bottom' : 'right'}>
-                            <TrashBox />
-                        </PopoverContent>
-                    </Popover>
+                    {/* <Popover> */}
+                    {/*     <PopoverTrigger className='w-full mt-4'> */}
+                    {/*         <div style={{ paddingLeft: '12px' }} role='button' className={cn("group min-h-[27px] text-sm py-1 pr-3 w-full hover:bg-primary/5 flex items-center text-muted-foreground font-medium", false && "bg-primary/5 text-primary")}> */}
+                    {/*             <Trash2 className='shrink-0 h-[18px] mr-2 text-muted-foreground' /> */}
+                    {/*             <span className='truncate'>Trash</span> */}
+                    {/*         </div> */}
+                    {/*     </PopoverTrigger> */}
+                    {/*     <PopoverContent className='p-0 w-72' */}
+                    {/*         side={isMobile ? 'bottom' : 'right'}> */}
+                    {/*         <TrashBox /> */}
+                    {/*     </PopoverContent> */}
+                    {/* </Popover> */}
                 </div>
                 <div onMouseDown={onMouseDown} onClick={resetWidth} className="opacity-0 group-hover/sidebar:opacity-100 transition cursor-ew-resize absolute h-full w-1 bg-primary/10 right-0 top-0"></div>
             </aside>
             <div
                 ref={navbarRef}
-                className={cn('absolute top-0 z-[99999] left-60 w-[calc(100%-240px)]', isResetting && 'transition-all ease-in-out duration-300', isMobile && 'left-0 w-full')}>
+                className={cn('absolute top-0 z-100  w-[calc(100%-240px)]', isResetting && 'transition-all ease-in-out duration-300', isMobile && 'w-full left-0')}>
 
                 {!!usePage().props.note ? (
-                    <NavComponent isCollapsed={isCollapsed} onResetWidth={resetWidth} />
+                    <NavComponent isCollapsed={isCollapsed} isMobile={isMobile} onResetWidth={resetWidth} />
                 ) : (
                     <nav className='bg-transparent px-3 py-2 w-full'>
                         {isCollapsed && <MenuIcon role='button' onClick={resetWidth} className='h-6 w-6 text-muted-foreground'></MenuIcon>}

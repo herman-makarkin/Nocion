@@ -58,7 +58,7 @@ const Title = () => {
     }
 
     return (
-        <div className="flex items-center gap-x-1">
+        <div className="flex items-center gap-x-1 z-[99999]">
             {!!note.icon && <p>{note.icon}</p>}
             {isEditing ? (
                 <Input onChange={onChange} onKeyDown={onKeyDown} className="h-7 px-2 focus-visible:ring-transparent" ref={inputRef} onClick={enableInput} onBlur={disableInput} />

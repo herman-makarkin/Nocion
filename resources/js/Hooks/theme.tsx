@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils';
 import { create } from 'zustand';
 
 type ThemeStore = {
@@ -7,9 +8,23 @@ type ThemeStore = {
     toggle: () => void;
 }
 
+
 export const useTheme = create<ThemeStore>((set, get) => ({
     isDark: false,
-    onDark: () => set({ isDark: true }),
-    onLight: () => set({ isDark: false }),
-    toggle: () => set({ isDark: !get().isDark }),
+    onDark: () => {
+        document.body.classList.add('dark');
+        return set({ isDark: true })
+    },
+    onLight: () => {
+        document.body.classList.remove('dark');
+        set({ isDark: false })
+    },
+    toggle: () => {
+        if (get().isDark)
+            document.body.classList.remove('dark');
+        else
+            document.body.classList.add('dark');
+
+        return set({ isDark: !get().isDark })
+    },
 }));
